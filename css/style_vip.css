@@ -1,0 +1,239 @@
+.checkbox-filter > input[type=checkbox] {
+    display: none;
+}
+.checkbox-filter > input[type=checkbox] + span {
+    backdrop-filter: blur(10px);
+    background-color: rgba(199, 199, 199, 0.123);
+    border-radius: 5px;
+    border-width: 0;
+    padding: 10px;
+    margin: 5px;
+    transition: all 0.5s;
+}
+.checkbox-filter > input[type=checkbox]:checked + span {
+    background-color: rgba(240, 233, 233, 0.596);
+}
+
+
+.vip-menu-sidebar {
+    background-color: var(--PRIMARY-COLOR);
+    min-width: 200px;
+    flex-shrink: 0;
+    border-top-right-radius: 15px;
+}
+
+#vip-new-order {
+    font-size: small;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.vip-menu-sidebar-order td.item-name {
+    width: 60%;
+}
+.vip-menu-sidebar-order td.dropped-count {
+    width: 30%;
+    text-align: right;
+}
+.vip-menu-sidebar-order td.buttons {
+    width: 10%;
+    padding: 0;
+}
+.vip-menu-sidebar-order td.buttons button {
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    border-radius: 0;
+}
+
+
+#vip-order-total-view {
+    display: none;
+    position: relative;
+    float: left;
+    top: 10px;
+}
+
+#vip-menu-browser {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+    align-content: flex-start;
+    overflow: scroll;
+    height: 100%;
+}
+
+.vip-menu-browser-entry {
+    background-color: aliceblue;
+    width: calc(220px * 1.5);
+    margin: 20px;
+    padding: 10px;
+}
+
+.dropped {
+    color: black;
+}
+
+.cancelbtn {
+    border-radius: 0;
+    padding: 4px 6px;
+    margin: 5px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+/* When the inputs get focus, do something */
+.form-container input[type=text]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom:10px;
+    opacity: 0.8;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+    opacity: 1;
+}
+
+
+
+html, body, .menu-content {
+    height: 100%;
+    overflow: hidden;
+}
+
+.menu-content {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: stretch;
+    align-items: stretch;
+    height: 100%;
+}
+
+.menu-sidebar-order {
+    font-size: xx-large;
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+
+
+.menu-centercontent {
+    flex-grow: 1;
+}
+
+#menu-topbar {
+    background-image: url("../images/dry_sand1.jpg");
+    background-size: 60%;
+    overflow: hidden;
+
+    font-size: x-small;
+    font-style: normal;
+    padding: 10px;
+    max-height: 100%;
+    transition: max-height 0.25s;
+}
+
+#menu-topbar:not(.dropdown-open) {
+    max-height: 50px;
+}
+
+.dropdown-open #vip-filters-list {
+    background-color: rgba(199, 199, 199, 0.507);
+    margin: 0px 50px;
+}
+
+#vip-filters-list {
+    transition: margin 0.5s, background-color 0.5s;
+    background-color: transparent;
+    margin: 0px 0px;
+
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+#vip-filters-list > * {
+    flex-shrink: 0;
+}
+#vip-filters-list > .checkbox-filter {
+    max-width: 100%;
+}
+
+#vip-filters-list > .checkbox-filter label {
+    margin-bottom: 30px;
+}
+
+#vip-filters-list > .slider-filter {
+    max-width: 50%;
+    flex-grow: 1;
+}
+.slider-filter input {
+    width: 100%;
+}
+
+#menu-browser {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+    align-content: flex-start;
+}
+
+.menu-browser-entry {
+    background-color: aliceblue;
+    height: calc(160px * 1.5);
+    width: calc(220px * 1.5);
+    margin: 20px;
+    padding: 10px;
+}
+
+#userInfo {
+    color: darkred;
+}
+
+#userInfo-pane { 
+    display: none;
+    background-color: rgba(139, 0, 0, 0.315);
+    position: absolute;
+    top: -8%;
+    left: 40%;
+    margin: 10%;
+    padding: 20px;
+}
+
+#paymentInfo-pane { 
+    display: none;
+    background-color: rgba(139, 0, 0, 0.315);
+    position: absolute;
+    top: -8%;
+    left: 40%;
+    margin: 10%;
+    padding: 20px;
+}
+
+#paid-code-pane { 
+    display: none;
+    background-color: rgba(139, 0, 0, 0.315);
+    position: absolute;
+    top: -8%;
+    left: 40%;
+    margin: 10%;
+    padding: 20px;
+}

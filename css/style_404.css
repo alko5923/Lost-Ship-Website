@@ -1,0 +1,33 @@
+
+
+/*div {
+    height: 400px;
+    border: solid;
+}*/
+
+.four-root {
+    font-style: normal;
+    background-color: wheat;
+    height: 100%;
+}
+
+.four-root .header {
+    background-color: wheat;
+}
+
+.four-root>.img-container {
+    width: 40%;
+    height: 100%;
+}
+
+.four-root>.img-container>img {
+    width: 40%;
+    max-height: 80%;
+    object-fit: contain;
+}
+
+.four-content {
+    display: inline-block;
+    position: absolute;
+    top: 30%;
+}

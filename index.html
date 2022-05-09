@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>The Flying Dutchman</title>
+    <link rel="stylesheet" href="css/common.css">
+
+    <link rel="stylesheet" href="css/style_index.css">
+    <link rel="stylesheet" href="css/style_staff.css">
+    <link rel="stylesheet" href="css/style_owner.css">
+    <link rel="stylesheet" href="css/style_vip.css">
+    <link rel="stylesheet" href="css/style_404.css">
+
+    <script type="text/javascript" src="javascript/jquery-3.3.1.min.js"></script>
+
+    <script type="text/javascript" src="database/userDB.js"></script>
+    <script type="text/javascript" src="database/menuDB.js"></script>
+    <script type="text/javascript" src="database/languageDB.js"></script>
+
+    <script type="text/javascript" src="javascript/multipageSystem.js"></script>
+    <script type="text/javascript" src="javascript/languageSystem.js"></script>
+
+    <script type="text/javascript" src="javascript/staffItemLoader.js"></script>
+    <script type="text/javascript" src="javascript/staff.js"></script>
+
+    <script type="text/javascript" src="javascript/itemLoader.js"></script>
+    <script type="text/javascript" src="javascript/credential.js"></script>
+    <script type="text/javascript" src="javascript/index.js"></script>
+    <script type="text/javascript" src="javascript/vip.js"></script>
+
+    <script type="text/javascript" src="javascript/owner.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+    <!-- mp-page, mp-placeholder, and mp-include are defined in multipageSystem.js -->
+    <!-- This is the header with only the logo and language selector.
+         It can be included on pages by adding:
+            <mp-include name="header"></mp-include>
+        -->
+    <mp-page class="header" name="header">
+        <img src="images/logo2.jpg" alt="logo" class="logo" onclick="changePage('index')">
+
+        <!-- This is a placeholder that gets replaced by the content between the mp-include tags.
+                This way different pages can have different things in their headers. -->
+        <mp-placeholder *></mp-placeholder>
+
+        <div class="middle-padding"></div>
+
+        <!-- All content in the mp-include that has class="right-side" gets put here -->
+        <mp-placeholder .right-side></mp-placeholder>
+        
+        <button onclick="logOut()" class="show-if-logged">Log out</button>
+
+        <button class="lang_menu"><img alt="language" class="flag language" onclick="changeLang()"></button>
+    </mp-page>
+
+    <!-- Index page -->
+    <mp-page name="index">
+        <div class="container">
+            <mp-include name="header">
+                <button class="show-if-regular" id="staff" onclick="openStaffForm()"></button>
+                <button class="show-if-regular" id="vip" onclick="openVipForm()"></button>
+                
+                <p class="show-if-logged"> <span class="welcome-word"></span>, <span class="logged-user-firstname"></span>!</p>
+                
+            </mp-include>
+            <div id = "greetings">
+                <div class = "banner">
+                    <div id="welcome"></div>
+                    <div id="thirsty"></div>
+                    <div id="click"></div>
+                </div>
+                <div class="picture">
+                    <img src="images/pirate.webp" alt="picture" onclick="changePage('vip')">
+                </div>
+            </div>
+        </div>
+    </mp-page>
+
+    <!-- Staff login form for the index page. They are hidden by default and appear as floating windows atop of the page. -->
+    <div class="form-login" id="loginStaff">
+        <form class="form-container">
+            <h1>Login</h1>
+        <label><b>Username</b></label>
+            <label>
+                <input id="usernameStaff" type="text" onfocus="this.value=''" placeholder="Enter username" name="username" required>
+            </label>
+        <label><b>Password</b></label>
+            <label>
+                <input id="passwordStaff" type="password" onfocus="this.value=''" placeholder="Enter password" name="psw" required>
+            </label>
+        <button type="button" class="btn" onclick="checkUserStaff()">Login</button>
+        <button type="button" class="cancelbtn" onclick="closeLoginForms()">Close</button>
+        </form>
+    </div>
+
+    <!-- Vip login form for the index page. They are hidden by default and appear as floating windows atop of the page. -->
+    <div class="form-login" id="loginVip">
+        <form class="form-container">
+            <h1>Login</h1>
+            <label id="email"><b>Username</b></label>
+            <label>
+                <input id="usernameVip" type="text" onfocus="this.value=''" placeholder="Enter username" name="email" required>
+            </label>
+            <label id="psw"><b>Password</b></label>
+            <label>
+                <input id="passwordVip" type="password" onfocus="this.value=''" placeholder="Enter password" name="psw" required>
+            </label>
+            <button type="button" class="btn" onclick="checkUserVip()">Login</button>
+            <button type="button" class="cancelbtn" onclick="closeLoginForms()">Close</button>
+        </form>
+    </div>
+
+
+    <!-- Staff page -->
+    <mp-page name="staff">
+        <mp-include name="header">
+            <button onclick="changePage('index')" id="log-out"></button>
+            <button onclick="newOrderWindow()" id="create-order"></button>
+            <button onclick="allOrdersWindow()" id="see-orders"></button>
+            <button onclick="showTableWindow()" id="show-table-window"></button>
+            <button onclick="changePage('owner')" id="show-inventory"></button>
+            <button onClick="notifySecurity()" id="warningButton"></button>
+        </mp-include>
+
+        <div class="menu-content">
+
+            <div class="staff-menu-sidebar">
+                <!-- Shows the window for a new order !-->
+                    <div class="staff-menu-sidebar-order" id="staff-new-order">
+                        <div id="staff-new-order-msg">
+                        </div><br>
+                        <!-- TODO: Used to initialize a new order, does not work atm !-->
+                        <br>
+                        <!-- Form for input of items !-->
+                        <form id="add-to-order" method="GET">
+                            <p id="staff-new-order-info"></p>
+                        <label for="add-name" id="label-name"></label>
+                        <input type="text" id="add-name" name="add-name"><br>
+                        <label for="add-quantity" id="label-quantity"></label>
+                        <input type="text" id="add-quantity" name="add-quantity"><br>
+                            <label for="add-table" id="label-table"></label>
+                            <input type="text" id="add-table" name="add-table"><br>
+                            <!-- TODO: Add to chosen table. how? !-->
+                        <input type="button" value="Add item" id="add-item" onclick="addItemToOrder()">
+                            <input type="button" value="Submit order" id="submit-order" onclick="submitOrder()">
+                        </form>
+                        <br><br>
+                        <button onclick="payOrder()" id="staff-pay-order"></button>
+                        <button onclick="clearOrder()" id="staff-clear-order"></button>
+                        <button onclick="editOrder()" id="staff-edit-order"></button>
+
+                <div id="staff-order-view" contenteditable="true">
+                    <p id="staff-placement"></p>
+                    <br><br>
+                </div>
+                </div></div>
+            <!-- Show the window for all tables in the pub !-->
+            <div class="staff-menu-sidebar-order" id="staff-all-tables">
+                <div id="all-tables-msg"></div>
+                <select id="tableOptions" onchange="updateTableView()">
+                    <option value="default" id="option-choose-table"></option>
+                </select>
+               <p id="show-table-choice">CHOSEN TABLE: </p>
+                <button type="button" onclick="showTableWindow()" id="tab-close">CLOSE</button>
+            </div>
+                <!-- Shows the window for all registered orders !-->
+                <div class="staff-menu-sidebar-order" id="staff-all-orders">
+                    <div id="choose-order-msg"></div>
+                    <select id="order-options" onchange="staffUpdateOrderView()">
+                    <option value="default" id="option-choose-order"></option>
+                </select>
+                    <p id="show-order-choice"></p>
+                    <button onclick="editOrder()" id="edit-order"></button>
+                <button type="button" onclick="allOrdersWindow()" id="close"></button>
+
+            </div>
+
+            <div class="menu-centercontent">
+
+                <!-- Filters for beverages !-->
+                <div class="menu-topbar glass-panel">
+                    <div style="display: flex; align-items: center;">
+                        <label for="toggle">Filter</label>
+                        <button name="toggle" id="menu-toggle-dropdown-filters"></button>
+                        <div id="staff-filters-list"></div>
+                    </div>
+
+                    <div>
+                        <label for="sort" class="sort-by-string">Sort by</label>
+                        <select name="sort" id="staff-sort-by" onchange="updateBeverageListView()">
+                            <option value="namn" class="name"></option>
+                            <option value="alkoholhalt" class="alkoholhalt"></option>
+                            <option value="prisinklmoms" class="prisinklmoms"></option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div id="staff-menu-browser">
+                </div>
+            </div>
+
+        </div>
+    </mp-page>
+
+
+
+    <!-- Owner page -->
+    <mp-page name="owner">
+        <mp-include name="header">
+            <button onclick="changePage('staff')" id="back-to-staff"></button>
+        </mp-include>
+
+        <div class="options">
+            <h1 id="question"></h1>
+            <button class="ownerBtn" id="refill" onclick="refillBeverage()"></button>
+            <button class="ownerBtn" id="add" onclick="openAddForm()"></button>
+            <button class="ownerBtn" id="remove" onclick="removeBeverage()"></button>
+            <button class="ownerBtn" id="undo" onclick="undo()">UNDO</button>
+            <button class="ownerBtn" id="redo" onclick="redo()">REDO</button>
+        </div>
+
+        <div style="overflow: auto; height: 100%;">
+            <table style="width: 80%; margin-left: auto; margin-right: auto; margin-bottom: 500px;">
+                <thead>
+                    <th id="name"></th>
+                    <th id="stock"></th>
+                    <th id="price" style="width: 5%;"></th>
+                </thead>
+                <tbody id="menuTable">
+                </tbody>
+            </table>
+        </div>
+    </mp-page>
+
+    <!-- Form used when refilling the stock of an item-->
+    <div id="refillForm">
+        <form class="form-container">
+            <h1 id="refill"></h1>
+            <label>
+                <input id="refillAmount" type="text" onfocus="this.value=''" placeholder="Amount">
+            </label>
+            <button type="button" class="addbtn">Add</button>
+        </form>
+    </div>
+
+    <!-- Form used when adding beverages-->
+    <div id="addBeverageForm">
+        <form class="form-container">
+            <h1>Add an item</h1>
+            <div id="addBeverageFormInputs">
+                <label> <b>Name</b>
+                    <input id="beverageName" type="text" placeholder="Enter name" name="bevName">
+                </label>
+                <label> <b>Producer</b>
+                    <input id="producerName" type="text" placeholder="Enter producer name">
+                </label>
+                <label> <b>Country</b>
+                    <input id="countryName" type="text" placeholder="Enter country name">
+                </label>
+                <label> <b>Category</b>
+                    <select id="beverageCategory">
+                        <option value="öl" class="öl">öl</option>
+                        <option value="whiskey" class="whiskey">whiskey</option>
+                        <option value="vin" class="vin">vin</option>
+                        <option value="rom" class="rom">rom</option>
+                        <option value="cocktail" class="cocktail">cocktail</option>
+                    </select>
+                </label>
+                <label> <b>Subcategory</b>
+                    <select id="beverageSubcategory">
+                        <option value="IPA" class="IPA">IPA</option>
+                        <option value="bourbon" class="bourbon">bourbon</option>
+                        <option value="scotch" class="scotch">scotch</option>
+                        <option value="rött" class="rött">rött</option>
+                        <option value="vitt" class="vitt">vitt</option>
+                        <option value="Lager" class="Lager">Lager</option>
+                        <option value="ljust" class="ljust">ljust</option>
+                        <option value="mörkt" class="mörkt">mörkt</option>
+                    </select>
+                </label>
+                <label> <b>Alcohol percent (%)</b>
+                    <input id="alcoholPercent" type="number" placeholder="Enter strength">
+                </label>
+                <label> <b>Serving</b>
+                    <select id="servingType">
+                        <option value="flaska" class="flaska">flaska</option>
+                        <option value="glas" class="glas">glas</option>
+                        <option value="shot" class="shot">shot</option>
+                        <option value="pint" class="pint">pint</option>
+                    </select>
+                </label>
+                <label> <b>Size (ml)</b>
+                    <input id="servingSize" type="number" placeholder="Enter serving size">
+                </label>
+                <label> <b>Price</b>
+                    <input id="beveragePrice" type="number" placeholder="Enter price">
+                </label>
+                <label> <b>Koscher</b>
+                    <input id="beverageKoscher" type="checkbox">
+                </label>
+                <label> <b>Ekologisk</b>
+                    <input id="beverageEkologisk" type="checkbox">
+                </label>
+                <label> <b>Nötter</b>
+                    <input id="beverageNotter" type="checkbox">
+                </label>
+                <label> <b>Gluten</b>
+                    <input id="beverageGluten" type="checkbox">
+                </label>
+                <label> <b>Laktos</b>
+                    <input id="beverageLaktos" type="checkbox">
+                </label>
+                <label> <b>Tannin</b>
+                    <input id="beverageTannin" type="checkbox">
+                </label>
+            </div>
+            <button type="button" class="addbtn" onclick="addBeverage()">Add</button>
+            <button type="button" class="cancelbtn" onclick="closeAddForm()">Close</button>
+        </form>
+    </div>
+
+    <!-- Vip page -->
+    <mp-page name="vip">
+        <mp-include name="header">
+            <button onClick="clearOrder()" id="VIP-clear-order"></button>
+            <button onClick="payOrder()" id="VIP-pay-order"></button>
+            <button onClick="showUserInfo()" class="show-if-logged" id="userInfo"></button>
+        </mp-include>
+
+        <div class="menu-content">
+
+            <div class="vip-menu-sidebar">
+                <div id="vip-menu-order-message"></div>
+
+                <div style="height: 70%;" ondrop="dropBeverageOrder(event)" ondragover="allowDrop(event)">
+                    <table class="vip-menu-sidebar-order" id="vip-new-order" >
+                    
+                    </table>
+                </div>
+                <p id="vip-order-total-view">
+                    <span id="price-total"></span>
+                    <span id="vip-order-sum"></span>
+                    <span class="sek"></span> (<span class="incl-vat"></span>)
+                </p>
+            </div>
+
+            <div class="menu-centercontent">
+                <div id="menu-topbar" class="glass-panel">
+                    <label>
+                        <span class="sort-by-string">Sort by</span>
+                        <select id="vip-sort-by" onchange="updateBeverageListView()">
+                            <option value="namn" class="name"></option>
+                            <option value="alkoholhalt" class="alkoholhalt"></option>
+                            <option value="prisinklmoms" class="prisinklmoms"></option>
+                        </select>
+                    </label>
+                    <button onclick="toggleFilterDropdown()">Filter</button>
+
+                    <div id="vip-filters-list"></div>
+                </div>
+
+                <div id="vip-menu-browser">
+                </div>
+            </div>
+        </div>
+
+        <div id="userInfo-pane"></div>
+        <div id="paymentInfo-pane">
+            <div>
+                <div id="payment-type"></div>
+                <button id="table" onclick="payAtTable()" style="margin-left: -5px; margin-right: 15px;">
+                </button>
+                <button id="bar" onclick="payAtBar()" style="margin-left: -5px; margin-right: 15px;">
+                </button>
+            </div>
+        </div>
+        <div id="paid-code-pane"></div>
+    </mp-page>
+</body>
+</html>

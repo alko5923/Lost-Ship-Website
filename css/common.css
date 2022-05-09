@@ -1,0 +1,125 @@
+/**
+ * Define color constants.
+ * They can be used like this:
+ *     background-color: var(--SECONDARY-COLOR);
+ */
+:root {
+    --PRIMARY-COLOR: #5ecff215;
+    --PRIMARY-COLOR-LIGHT: #a2e5f8;
+    --SECONDARY-COLOR: #F5AE69;
+    --SECONDARY-COLOR-LIGHT: #fad1a7;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Verdana, sans-serif;
+    font-style: italic;
+    font-weight: bold;
+
+    background-image: url("../images/wave1.png");
+    background-repeat: repeat-x;
+    background-size: 90%;
+}
+
+html {
+    background-image: url("../images/dry_sand1.jpg");
+    background-size: 50%;
+}
+
+.header {
+    backdrop-filter: blur(10px);
+    background-color: rgba(199, 199, 199, 0.568);
+    background-size: 100%;
+    background-repeat: repeat-x;
+
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 5rem;
+    height: 5rem;
+    /*background-color: var(--PRIMARY-COLOR);*/
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content:stretch;
+    align-items: center;
+}
+
+.header>.middle-padding {
+    flex-grow: 999999;
+}
+
+
+.driftwood-style {
+    background-image: url("../images/driftwood.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    background-color: transparent;
+    text-align: center;
+    border: none;
+    color: black;
+    text-decoration: none;
+    position: relative;
+}
+button.driftwood-style:hover {
+    transform: scale(1.2);
+    background-color: transparent;
+}
+
+div.glass-panel {
+    backdrop-filter: blur(10px);
+    background-color: rgba(199, 199, 199, 0.568);
+    border-radius: 2px;
+}
+.glass-panel>button {
+    background-color: rgba(70, 70, 70, 0.4);
+    border-radius: 0;
+}
+.glass-panel>button:hover {
+    background-color: rgba(50, 50, 50, 0.4);
+}
+.glass-panel>button:active {
+    background-color: rgba(20, 20, 20, 0.4);
+}
+
+/**
+ * Buttons in the header should fill the whole vertical
+ * space and not have rounded corners.
+ */
+.header>button {
+    margin: 0;
+    align-self: stretch;
+    border-radius: 0;
+    background-color: transparent;
+}
+
+button {
+    backdrop-filter: blur(10px);
+    background-color: rgba(199, 199, 199, 0.568);
+    border-radius: 5px;
+    border-width: 0;
+    padding: 10px;
+    margin: 5px;
+}
+
+button:hover {
+    background-color: rgba(70, 70, 70, 0.4);
+}
+
+button:active {
+    background-color: rgba(50, 50, 50, 0.4);
+}
+
+img.logo {
+    width: 30px;
+    margin-right: 48px;
+}
+
+img.language {
+    width: 30px;
+    margin-left: 0;
+}
+
+button.lang_menu {
+    margin-left: auto;
+}
