@@ -1,3 +1,5 @@
+![pirate-pic](https://github.com/alko5923/Database-Design/blob/main/MySQL-Logo.png)
+
 # The Flying Dutchman Website
 
 ## For quicker navigation between the pages
