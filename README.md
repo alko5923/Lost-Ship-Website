@@ -1,4 +1,4 @@
-![pirate-pic](https://github.com/alko5923/Database-Design/blob/main/MySQL-Logo.png)
+![pirate-pic](https://github.com/alko5923/The-Flying-Dutchman/blob/main/pirate.webp)
 
 # The Flying Dutchman Website
 
