@@ -1,6 +1,6 @@
-![pirate-pic](https://github.com/alko5923/The-Flying-Dutchman/blob/main/pirate.webp)
-
 # The Flying Dutchman Website
+
+The final project for the System Design with a User Perspective course at Uppsala university. 
 
 ## For quicker navigation between the pages
 Owner user: "password": "inherit0", "username": "jorass".
@@ -31,4 +31,6 @@ to the owner page where you have some functionalities that are specific to the
 owner only. 
 
 Cheers! 
+
+![pirate-pic](https://github.com/alko5923/The-Flying-Dutchman/blob/main/pirate.webp)
 
